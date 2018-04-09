@@ -18,6 +18,7 @@
 #include "rt3261_config.h"
 #include "rt5616_config.h"
 #include "rt5640_config.h"
+#include "rt5660_config.h"
 #include "rt3224_config.h"
 #include "wm8960_config.h"
 
@@ -44,6 +45,10 @@ struct alsa_sound_card_config sound_card_config_list[] = {
     {
         .sound_card_name = "rockchiprt5640c",
         .route_table = &rt5640_config_table,
+    },
+    {
+        .sound_card_name = "RKRT5660",
+        .route_table = &rt5660_config_table,
     },
     {
         .sound_card_name = "RK29RT3261",

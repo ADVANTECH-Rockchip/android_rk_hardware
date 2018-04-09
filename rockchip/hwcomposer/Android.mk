@@ -22,7 +22,9 @@ LOCAL_SRC_FILES := \
 	rk_hwcomposer.cpp \
 	rk_hwc_com.cpp \
 	rga_api.cpp \
-	hwc_rga.cpp
+	hwc_rga.cpp \
+	rk_hwc_debug_mark_time.cpp \
+	rk_hwc_debug_hack_wins_cfg.cpp
 
 ifeq ($(strip $(TARGET_BOARD_PLATFORM)),rk3399)
 LOCAL_SRC_FILES += \
@@ -33,10 +35,8 @@ LOCAL_SRC_FILES += \
 	rk_hwcomposer_hdmi.cpp
 endif
 
-ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),tablet)
 LOCAL_SRC_FILES += \
 	rk_hwcomposer_blit.cpp
-endif
 
 LOCAL_CFLAGS := \
 	$(CFLAGS) \
@@ -49,6 +49,8 @@ LOCAL_C_INCLUDES := \
 	$(AQROOT)/hal/inc
 
 LOCAL_C_INCLUDES += hardware/rockchip/libgralloc/ump/include
+
+LOCAL_C_INCLUDES += hardware/rockchip/librga
 
 LOCAL_C_INCLUDES += \
 	system/core/libion/include \
@@ -75,9 +77,13 @@ LOCAL_SHARED_LIBRARIES := \
 	libion \
 	libhardware_legacy \
 	libsync \
-	libui
+	libui \
+	libutils
 
-
+ifeq ($(strip $(TARGET_BOARD_PLATFORM)),rk3399)
+LOCAL_SHARED_LIBRARIES += librga
+LOCAL_CFLAGS += -DUSE_RGA_LIBRARY
+endif
 
 #LOCAL_C_INCLUDES := \
 #	$(LOCAL_PATH)/inc
@@ -100,6 +106,9 @@ endif
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),vr)
 LOCAL_CFLAGS += -DRK3399_VR
 endif
+ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),stbvr)
+LOCAL_CFLAGS += -DRK3399_VR
+endif
 endif
 
 ifeq ($(strip $(TARGET_BOARD_PLATFORM)),rk3366)
@@ -114,6 +123,9 @@ ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),phone)
 LOCAL_CFLAGS += -DRK3366_PHONE
 endif
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),vr)
+LOCAL_CFLAGS += -DRK3366_VR
+endif
+ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),stbvr)
 LOCAL_CFLAGS += -DRK3366_VR
 endif
 endif
@@ -148,6 +160,9 @@ endif
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),vr)
 LOCAL_CFLAGS += -DRK3288_VR
 endif
+ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),stbvr)
+LOCAL_CFLAGS += -DRK3288_VR
+endif
 endif
 
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),tablet)
@@ -161,14 +176,14 @@ LOCAL_CFLAGS += -DRK_PHONE
 else
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),vr)
 LOCAL_CFLAGS += -DRK_VR
+else
+ifeq ($(strip $(TARGET_BOARD_PLATFORM_PRODUCT)),stbvr)
+LOCAL_CFLAGS += -DRK_VR
+endif #stbvr
 endif #vr
 endif #phone
 endif #box
 endif #tablet
-
-ifeq ($(strip $(BOARD_USE_DUAL_MIPI)),true)
-LOCAL_CFLAGS += -DONE_VOP_DUAL_MIPI_OUT
-endif
 
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_GPU)),G6110)
         LOCAL_CFLAGS += -DGPU_G6110
@@ -184,9 +199,11 @@ LOCAL_CFLAGS += -DMALI_AFBC_GRALLOC=0
 endif
 
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_GPU)), mali-t760)
+ifneq (1,$(strip $(shell expr $(PLATFORM_VERSION) \< 6.0)))
 LOCAL_CFLAGS += -DMALI_PRODUCT_ID_T76X=1
 # we use mali_afbc_gralloc, only if macro MALI_AFBC_GRALLOC is 1
 LOCAL_CFLAGS += -DMALI_AFBC_GRALLOC=1
+endif
 endif
 
 ifeq ($(strip $(TARGET_BOARD_PLATFORM_GPU)), mali-t860)
@@ -206,7 +223,19 @@ endif
 LOCAL_CFLAGS += -DPLATFORM_SDK_VERSION=$(PLATFORM_SDK_VERSION)
 
 ifeq ($(strip $(BOARD_USE_AFBC_LAYER)),true)
+# 宏 USE_AFBC_LAYER 和 在源码中定义的 G6110_SUPPORT_FBDC 相互独立并互斥.
 LOCAL_CFLAGS += -DUSE_AFBC_LAYER
+endif
+
+#has no "external/stlport" from Android 6.0 on
+ifeq (1,$(strip $(shell expr $(PLATFORM_VERSION) \< 6.0)))
+LOCAL_C_INCLUDES += \
+    external/stlport/stlport
+
+LOCAL_SHARED_LIBRARIES += \
+    libstlport
+
+LOCAL_C_INCLUDES += bionic
 endif
 
 LOCAL_MODULE := hwcomposer.$(TARGET_BOARD_HARDWARE)
