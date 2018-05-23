@@ -5,19 +5,19 @@
 		<CamDevie>
 			<HardWareInfo>
 				<Sensor>
-					<SensorName name="OV5640" ></SensorName>
-					<SensorDevID IDname="CAMSYS_DEVID_SENSOR_1B"></SensorDevID>
+					<SensorName name="OV5648"></SensorName>
+					<SensorDevID IDname="CAMSYS_DEVID_SENSOR_1A"></SensorDevID>
 					<SensorHostDevID busnum="CAMSYS_DEVID_MARVIN" ></SensorHostDevID>
-					<SensorI2cBusNum busnum="1"></SensorI2cBusNum>
+					<SensorI2cBusNum busnum="3"></SensorI2cBusNum>
 					<SensorI2cAddrByte byte="2"></SensorI2cAddrByte>
 					<SensorI2cRate rate="100000"></SensorI2cRate>
 					<SensorAvdd name="NC" min="0" max="0" delay="0"></SensorAvdd>
 					<SensorDvdd name="NC" min="0" max="0" delay="0"></SensorDvdd>
-					<SensorDovdd name="NC" min="28000000" max="28000000" delay="5000"></SensorDovdd>
+					<SensorDovdd name="NC" min="18000000" max="18000000" delay="5000"></SensorDovdd>
 					<SensorMclk mclk="24000000" delay="1000"></SensorMclk>
-					<SensorGpioPwen ioname="RK30_PIN2_PB7" active="1" delay="1000"></SensorGpioPwen>
-					<SensorGpioRst ioname="RK30_PIN2_PB6" active="0" delay="1000"></SensorGpioRst>
-					<SensorGpioPwdn ioname="RK30_PIN2_PB7" active="0" delay="2000"></SensorGpioPwdn>
+					<SensorGpioPwen ioname="NC" active="1" delay="1000"></SensorGpioPwen>
+					<SensorGpioRst ioname="RK30_PIN2_PB4" active="0" delay="1000"></SensorGpioRst>
+                                        <SensorGpioPwdn ioname="RK30_PIN2_PB5" active="0" delay="2000"></SensorGpioPwdn>
 					<SensorFacing facing="front"></SensorFacing>
 					<SensorInterface interface="MIPI"></SensorInterface>
 					<SensorMirrorFlip mirror="0"></SensorMirrorFlip>
@@ -25,12 +25,12 @@
 					<SensorPowerupSequence seq="1234"></SensorPowerupSequence>					
 					<SensorFovParemeter h="60.0" v="60.0"></SensorFovParemeter>
 					<SensorAWB_Frame_Skip fps="15"></SensorAWB_Frame_Skip>					
-					<SensorPhy phyMode="CamSys_Phy_Mipi" lane="2"  phyIndex="2" sensorFmt="CamSys_Fmt_Raw_10b"></SensorPhy>
+					<SensorPhy phyMode="CamSys_Phy_Mipi" lane="2"  phyIndex="1" sensorFmt="CamSys_Fmt_Raw_10b"></SensorPhy>
 				</Sensor>
 				<VCM>
-					<VCMDrvName name="BuiltInSensor"></VCMDrvName>
+					<VCMDrvName name="NC"></VCMDrvName>
 					<VCMName name="NC"></VCMName>
-					<VCMI2cBusNum busnum="0"></VCMI2cBusNum>
+					<VCMI2cBusNum busnum="1"></VCMI2cBusNum>
 					<VCMI2cAddrByte byte="0"></VCMI2cAddrByte>
 					<VCMI2cRate rate="0"></VCMI2cRate>
 					<VCMVdd name="NC" min="0" max="0" delay="0"></VCMVdd>
@@ -40,11 +40,11 @@
 				</VCM>
 				<Flash>
 					<FlashName name="Internal"></FlashName>
-					<FlashI2cBusNum busnum="0"></FlashI2cBusNum>
+					<FlashI2cBusNum busnum="1"></FlashI2cBusNum>
 					<FlashI2cAddrByte byte="0"></FlashI2cAddrByte>
 					<FlashI2cRate rate="0"></FlashI2cRate>
-					<FlashTrigger ioname="NC" active="0"></FlashTrigger>
-					<FlashEn ioname="NC" active="0"></FlashEn>
+					<FlashTrigger ioname="NC" active="1"></FlashTrigger>
+					<FlashEn ioname="NC" active="1"></FlashEn>
 					<FlashModeType mode="1"></FlashModeType>
 					<FlashLuminance luminance="0"></FlashLuminance>
 					<FlashColorTemp colortemp="0"></FlashColorTemp>
