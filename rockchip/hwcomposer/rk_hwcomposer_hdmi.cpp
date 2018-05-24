@@ -78,7 +78,8 @@ void rk_check_hdmi_state()
  void rk_check_hdmi_uevents(const char *buf,int len)
 {
 	//ALOGD("line %d,buf[%s]",__LINE__,buf);
-#ifdef RK3288_MID
+//#ifdef RK3288_MID
+#if 0
     if (!strcmp(buf, "change@/devices/virtual/switch/hdmi")){
         rk_check_hdmi_state();
         handle_hotplug_event(g_hdmi_mode,6);
@@ -91,7 +92,8 @@ void rk_check_hdmi_state()
 		}
     }
 #else
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1 
     if(mUsedVopNum == 1){
         if(strstr(buf, "change@/devices/lcdc") != NULL){
             int fbx  = 0;

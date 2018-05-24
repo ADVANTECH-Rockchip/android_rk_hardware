@@ -129,7 +129,7 @@ static int              mipi_dual_vop_config(hwcContext *ctx, struct rk_fb_win_c
 int                     dump_config_info(struct rk_fb_win_cfg_data fb_info ,hwcContext * context, int flag);
 
 /**
- * 返回 rk_vop 是否支持输出指定的 hal_pixel_format.
+ * 返回 rk_vop 是否支持输出指定�?hal_pixel_format.
  */
 
 
@@ -155,24 +155,24 @@ inline static bool isAfbcInternalFormat(uint64_t internal_format)
 /**
  * .DOC : restrictions_for_afbc_area_par_from_vop
  *      from HJC :
- *      3399 中, 因为目前支持的 afbc_format 的 tile 大小为 16x8 pixel,
- *      rk_fb_dev 对 ioctl RK_FBIOSET_CONFIG_DONE 的参数中用于显示 afbc_layer 的 rk_fb_area_par,
- *      有如下要求 :
- *          x_offset 必须是 0,
- *          y_offset 必须是 0,
- *          xact 必须是 16 的整数倍.
- *          yact 必须是 8 的整数倍,
- *          xvir 必须是 16 的整数倍,
- *          yvir 必须是 8 的整数倍,
+ *      3399 �? 因为目前支持�?afbc_format �?tile 大小�?16x8 pixel,
+ *      rk_fb_dev �?ioctl RK_FBIOSET_CONFIG_DONE 的参数中用于显示 afbc_layer �?rk_fb_area_par,
+ *      有如下要�?:
+ *          x_offset 必须�?0,
+ *          y_offset 必须�?0,
+ *          xact 必须�?16 的整数�?
+ *          yact 必须�?8 的整数�?
+ *          xvir 必须�?16 的整数�?
+ *          yvir 必须�?8 的整数�?
  *      但是目前实测
- *          yact 必须是 16 的整数倍, 否则会触发 intr_post_buf_empty 或显示抖动,
- *              测试代码见 test_y_size_and_the_same_y_act_of_afbc_area(),
- *          ypos 大于 8 之后, 会触发 intr_post_buf_empty,
- *              测试代码见 test_y_pos_of_afbc_area().
+ *          yact 必须�?16 的整数�? 否则会触�?intr_post_buf_empty 或显示抖�?
+ *              测试代码�?test_y_size_and_the_same_y_act_of_afbc_area(),
+ *          ypos 大于 8 之后, 会触�?intr_post_buf_empty,
+ *              测试代码�?test_y_pos_of_afbc_area().
  */
 
 /**
- * VoP 是否支持当前传入的 用于显示 afbc_layer 的 area_parameter.
+ * VoP 是否支持当前传入�?用于显示 afbc_layer �?area_parameter.
  */
 bool can_vop_support_area_parameter_of_afbc_layer(struct rk_fb_area_par* pPar)
 {
@@ -233,7 +233,7 @@ bool can_vop_support_area_parameter_of_afbc_layer(struct rk_fb_area_par* pPar)
 }
 
 /**
- * 根据给定的 afbc_internal_format 设置对应的 rk_fb_area_par 实例中的相关 field.
+ * 根据给定�?afbc_internal_format 设置对应�?rk_fb_area_par 实例中的相关 field.
  */
 static void set_rk_fb_area_par_from_afbc_internal_format(struct rk_fb_area_par* pAreaPar,
                                                          uint64_t internal_format)
@@ -307,9 +307,9 @@ static void set_rk_fb_area_par_from_afbc_internal_format(struct rk_fb_area_par* 
 /*---------------------------------------------------------------------------*/
 
 /**
- * 从 hal_pixel_format 得到对应的 rk_vop_pixel_format.
+ * �?hal_pixel_format 得到对应�?rk_vop_pixel_format.
  *
- * .trick : 因为历史原因, userspace(graphics.h) 和 rk_fb_dev 中对 rk_ext_hal_pixel_format 定义的常数标识符 value 不同.
+ * .trick : 因为历史原因, userspace(graphics.h) �?rk_fb_dev 中对 rk_ext_hal_pixel_format 定义的常数标识符 value 不同.
  *          参见 kernel/include/linux/rk_fb.h.
  */
 int hwChangeFormatandroidL(IN int fmt)
@@ -481,7 +481,7 @@ int HALPixelFormatSetCompression(int iFormat, int iCompression)
 #endif  // #if G6110_SUPPORT_FBDC
 
 /**
- * 将 *list 中, 所有 sf_client_layer 的 composition_type 设置为 'HWC_NODRAW'.
+ * �?*list �? 所�?sf_client_layer �?composition_type 设置�?'HWC_NODRAW'.
  */
 void hwc_list_nodraw(hwc_display_contents_1_t  *list)
 {
@@ -539,8 +539,8 @@ int hwc_init_version()
 }
 
 /**
- * 根据特定 property 的 value 设置 'mLogL'.
- * 在 prepare() 中被调用.
+ * 根据特定 property �?value 设置 'mLogL'.
+ * �?prepare() 中被调用.
  */
 int init_log_level()
 {
@@ -552,7 +552,7 @@ int init_log_level()
 }
 
 /**
- * 返回 'in' 指定的 log_type 是否应该被输出.
+ * 返回 'in' 指定�?log_type 是否应该被输�?
  */
 bool log(int in)
 {
@@ -1787,10 +1787,10 @@ int initLayerCompositionType(hwcContext * Context,hwc_display_contents_1_t * lis
 }
 
 /**
- * 处理 'list' 中的信息, 并存储在 'Context' 的 layers_info_manager 中.
+ * 处理 'list' 中的信息, 并存储在 'Context' �?layers_info_manager �?
  * @return
  *      0, 成功.
- *      -1, layers_info_manager 没有足够的空间存储 'list' 中的信息.
+ *      -1, layers_info_manager 没有足够的空间存�?'list' 中的信息.
  */
 int collect_all_zones(hwcContext * Context, hwc_display_contents_1_t * list)
 {
@@ -1878,17 +1878,17 @@ int collect_all_zones(hwcContext * Context, hwc_display_contents_1_t * list)
         bool IsBottom = !strcmp(BOTTOM_LAYER_NAME,layer->LayerName);
         bool IsTop = !strcmp(TOP_LAYER_NAME,layer->LayerName);
         struct private_handle_t* SrcHnd = (struct private_handle_t *) layer->handle; // handle_of_current_buffer.
-        float hfactor; // 水平方向上, src_rect / dest_rect 的比例.
+        float hfactor; // 水平方向�? src_rect / dest_rect 的比�?
         float vfactor;
         hwcRECT dstRects[16];
         unsigned int m = 0;
-        bool is_stretch = 0; // 为显示当前 layer, 是否需要缩放.
+        bool is_stretch = 0; // 为显示当�?layer, 是否需要缩�?
         hwc_rect_t const * rects = Region->rects; // rects_of_visible_region
-        hwc_rect_t  rect_merge; // dest_rect 和 逐个 rect_of_visible_region 交集的 并集.
+        hwc_rect_t  rect_merge; // dest_rect �?逐个 rect_of_visible_region 交集�?并集.
         bool haveStartwin = false;
         bool trsfrmbyrga = false; // will_transform_by_rga.
-        int glesPixels = 0; // screen 上, visible_region 和 display_frame 交集的 像素个数.
-        int overlayPixels = 0; // display_frame 的 像素个数.
+        int glesPixels = 0; // screen �? visible_region �?display_frame 交集�?像素个数.
+        int overlayPixels = 0; // display_frame �?像素个数.
 #if (defined(RK3368_BOX) || defined(RK3288_BOX) || defined(RK3399_BOX))
         int d_w = 0;  //external weight & height
         int d_h = 0;
@@ -1974,7 +1974,8 @@ int collect_all_zones(hwcContext * Context, hwc_display_contents_1_t * list)
 #endif
 #endif
 
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
         if(Context==ctxp && Context->mResolutionChanged && Context->mLcdcNum == 2){
             is_stretch = true;
         }
@@ -1983,7 +1984,7 @@ int collect_all_zones(hwcContext * Context, hwc_display_contents_1_t * list)
 #ifdef USE_AFBC_LAYER
         if ( isAfbcInternalFormat(SrcHnd->internal_format) )
         {
-            is_stretch = true; // .trick : 为保证 afbc_layer 可以送 win0, 目前只保证 win0 可正常显示 afbc_layer.
+            is_stretch = true; // .trick : 为保�?afbc_layer 可以�?win0, 目前只保�?win0 可正常显�?afbc_layer.
         }
 #endif
 
@@ -2012,9 +2013,9 @@ int collect_all_zones(hwcContext * Context, hwc_display_contents_1_t * list)
             int r_bottom;
            
             r_left   = hwcMAX(DstRect->left,   rects[r].left);
-                // dest_rect_in_screen_space 和 current_rect_of_visible_region, 离开原点较远(数值较大) 的 left 是有效的 left.
+                // dest_rect_in_screen_space �?current_rect_of_visible_region, 离开原点较远(数值较�? �?left 是有效的 left.
             left_min = hwcMIN(r_left,left_min);
-                // 用于计算 dest_rect 和 逐个 rect_of_visible_region 交集的 并集.
+                // 用于计算 dest_rect �?逐个 rect_of_visible_region 交集�?并集.
 
             r_top    = hwcMAX(DstRect->top,    rects[r].top);
             top_min  = hwcMIN(r_top,top_min);
@@ -2178,7 +2179,7 @@ int collect_all_zones(hwcContext * Context, hwc_display_contents_1_t * list)
         Context->zone_manager.zone_info[j].pRelFenceFd = &(layer->releaseFenceFd);
 #endif
 
-        bool supportPlatform = false; // .R : 当前平台的 RGA 是否支持 nv12_10.
+        bool supportPlatform = false; // .R : 当前平台�?RGA 是否支持 nv12_10.
         supportPlatform = supportPlatform || Context->isRk3366;
         supportPlatform = supportPlatform || Context->isRk3399;
 #if 0
@@ -3184,7 +3185,8 @@ int try_wins_dispatch_mix_cross(void * ctx,hwc_display_contents_1_t * list)
         return -1;
     }
 
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
     if(Context==_contextAnchor && Context->mResolutionChanged && Context->mLcdcNum==2){
         ALOGD_IF(log(HLLFOU),"Policy out:%s,%d",__FUNCTION__,__LINE__);
         return -1;
@@ -3632,7 +3634,8 @@ int try_wins_dispatch_mix_up(void * ctx,hwc_display_contents_1_t * list)
         return -1;
     }
     
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
     if(Context==_contextAnchor && Context->mResolutionChanged && Context->mLcdcNum==2){
         ALOGD_IF(log(HLLFOU),"Policy out:%s,%d",__FUNCTION__,__LINE__);
         return -1;
@@ -4133,7 +4136,8 @@ int try_wins_dispatch_mix_down(void * ctx,hwc_display_contents_1_t * list)
         return -1;
     }
 
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
     if(Context==_contextAnchor && Context->mResolutionChanged && Context->mLcdcNum==2){
         ALOGD_IF(log(HLLFOU),"Policy out:%s,%d",__FUNCTION__,__LINE__);
         return -1;
@@ -4594,7 +4598,8 @@ int try_wins_dispatch_mix_v2 (void * ctx,hwc_display_contents_1_t * list)
         return -1;
     }
 
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
     if(Context==_contextAnchor && Context->mResolutionChanged && Context->mLcdcNum==2){
         ALOGD_IF(log(HLLFOU),"Policy out:%s,%d",__FUNCTION__,__LINE__);
         return -1;
@@ -6506,7 +6511,8 @@ int try_wins_dispatch_mix_win02 (void * ctx,hwc_display_contents_1_t * list)
         return -1;
     }
     
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
     if (Context==_contextAnchor && Context->mResolutionChanged && Context->mLcdcNum==2) {
         ALOGD_IF(log(HLLFOU),"Policy out:%s,%d",__FUNCTION__,__LINE__);
         return -1;
@@ -7769,7 +7775,7 @@ void dump_content_of_layers_to_file(hwc_display_contents_1_t* list)
     D("to dump content of layers to files.");
 
     // for (i = 0; list && (i < (list->numHwLayers - 1)); i++)
-    for ( i = 0; i < list->numHwLayers; i++ ) // 也 dump fb_target_layer.
+    for ( i = 0; i < list->numHwLayers; i++ ) // �?dump fb_target_layer.
     {
         hwc_layer_1_t const * l = &list->hwLayers[i];
 
@@ -9956,10 +9962,10 @@ int hwc_add_write_back(hwcContext * context, buffer_handle_t *hnd,
 }
 
 /**
- * 在 'ctx' 下, 检查 data_for_rk_fb_ioctl_config_done 是否正确.
+ * �?'ctx' �? 检�?data_for_rk_fb_ioctl_config_done 是否正确.
  * @return
  *      true, 没有问题.
- *      false, 'fb_info' 有问题,
+ *      false, 'fb_info' 有问�?
  */
 bool hwc_check_cfg(hwcContext * ctx,struct rk_fb_win_cfg_data fb_info)
 {
@@ -10029,20 +10035,20 @@ bool hwc_check_cfg(hwcContext * ctx,struct rk_fb_win_cfg_data fb_info)
 }
 
 /**
- * 从 hwc_context 和 hwc_display_contents, 获取 data_for_rk_fb_ioctl_config_done 等信息, 保存到 '*hfi' 中.
- * rk_hwc 对 prepare 和 set 的实现中, 都会调用本函数.
+ * �?hwc_context �?hwc_display_contents, 获取 data_for_rk_fb_ioctl_config_done 等信�? 保存�?'*hfi' �?
+ * rk_hwc �?prepare �?set 的实现中, 都会调用本函�?
  *
  * @param mix_prepare
- *      true, 当前 caller 在 prepare 流程中.
- *      false, 当前 caller 在 set 流程中.
+ *      true, 当前 caller �?prepare 流程�?
+ *      false, 当前 caller �?set 流程�?
  * @param mix_flag
- *      表征当前 hwc_context 的 composition_mode :
+ *      表征当前 hwc_context �?composition_mode :
  *          0, HWC_LCDC
  *          1, HWC_MIX
  *          2, HWC_MIX_V2
  *
  * @return
- *      若成功, 返回 0.
+ *      若成�? 返回 0.
  *      否则, 返回 -1.
  */
 int hwc_collect_cfg(hwcContext * context, hwc_display_contents_1_t *list,struct hwc_fb_info *hfi,int mix_flag,bool mix_prepare)
@@ -10050,7 +10056,7 @@ int hwc_collect_cfg(hwcContext * context, hwc_display_contents_1_t *list,struct 
     ZoneManager* pzone_mag = &(context->zone_manager);
     int i,j;
     int z_order = 0;
-    int win_no = 0; // 预期使用到 vop_win 的数量.
+    int win_no = 0; // 预期使用�?vop_win 的数�?
     bool isRealyMix = mix_flag; // is_in_real_mix_mode, 只有 HWC_MIX, HWC_MIX_V2 是真正的 mix_mode, HWC_LCDC 不是.
     int is_spewin = is_special_wins(context);
     struct rk_fb_win_cfg_data fb_info;
@@ -10194,7 +10200,7 @@ int hwc_collect_cfg(hwcContext * context, hwc_display_contents_1_t *list,struct 
     }
 #endif
 
-        /* 若将只 使用一个 vop_win, 且 使用 lcdc_overlay_mode, 则... */
+        /* 若将�?使用一�?vop_win, �?使用 lcdc_overlay_mode, �?.. */
         if(win_no ==1 && !mix_flag)         {
             if(raw_format ==  HAL_PIXEL_FORMAT_RGBA_8888){
                 fb_info.win_par[win_no-1].area_par[area_no].data_format = HAL_PIXEL_FORMAT_RGBX_8888;
@@ -10289,7 +10295,7 @@ int hwc_collect_cfg(hwcContext * context, hwc_display_contents_1_t *list,struct 
         int areaId = area_no;
 	    struct rk_fb_area_par* pAreaPar = &(fb_info.win_par[winId].area_par[areaId] );
 
-        /* 当前在 prepare 流程中, 且 当前 area 用于显示 afbc_layer, 则... */
+        /* 当前�?prepare 流程�? �?当前 area 用于显示 afbc_layer, �?.. */
         if ( mix_prepare && (1 == pAreaPar->fbdc_en) )
         {
             if ( !can_vop_support_area_parameter_of_afbc_layer(pAreaPar) )
@@ -10376,7 +10382,7 @@ int hwc_collect_cfg(hwcContext * context, hwc_display_contents_1_t *list,struct 
     }
 
     //if primary the y_offset will be n times of height
-    if((mix_flag && isRealyMix)&& !mix_prepare){ // 若当前是 mix_mode, 且 在 set 流程中, 则...
+    if((mix_flag && isRealyMix)&& !mix_prepare){ // 若当前是 mix_mode, �?�?set 流程�? �?..
         int numLayers = list->numHwLayers;
         int format = -1;
 
@@ -10659,10 +10665,10 @@ int hwc_pre_prepare(hwc_display_contents_1_t** displays, int flag)
 }
 
 /**
- * 检查 当前的是否有 hwc_overlay_policy 能够输出 hwc_display_contents.
+ * 检�?当前的是否有 hwc_overlay_policy 能够输出 hwc_display_contents.
  * @return
- *      0, 有 hwc_overlay_policy 能够输出.
- *      -1, 所有的 hwc_overlay_policy 都 "无法" 输出.
+ *      0, �?hwc_overlay_policy 能够输出.
+ *      -1, 所有的 hwc_overlay_policy �?"无法" 输出.
  */
 int hwc_try_policy(hwcContext * context,hwc_display_contents_1_t * list,int dpyID)
 {
@@ -10794,9 +10800,9 @@ static int set_gpu_freq_mode(int freq_mode)
 #endif
 
 /**
- * 对 primary_display 和 external_display 的 prepare() 实现.
+ * �?primary_display �?external_display �?prepare() 实现.
  * @param dpyID
- *      标识当前的 display, 取值为 HWC_DISPLAY_PRIMARY 或 HWC_DISPLAY_EXTERNAL.
+ *      标识当前�?display, 取值为 HWC_DISPLAY_PRIMARY �?HWC_DISPLAY_EXTERNAL.
  */
 static int hwc_prepare_screen(hwc_composer_device_1 *dev, hwc_display_contents_1_t *list, int dpyID)
 {
@@ -11220,7 +11226,7 @@ static int hwc_prepare_screen(hwc_composer_device_1 *dev, hwc_display_contents_1
     }
 #endif
 
-    /* 处理 'list' 中的信息, 并存储在 'context' 的 layers_info_manager 中. */
+    /* 处理 'list' 中的信息, 并存储在 'context' �?layers_info_manager �? */
     ret = collect_all_zones(context,list);
 
     //if (context->mHasYuvTenBit)
@@ -11234,7 +11240,7 @@ static int hwc_prepare_screen(hwc_composer_device_1 *dev, hwc_display_contents_1
         goto GpuComP;
     }
 
-    // 检查 当前的是否有 hwc_overlay_policy 能够输出 hwc_display_contents.
+    // 检�?当前的是否有 hwc_overlay_policy 能够输出 hwc_display_contents.
     ret = hwc_try_policy(context,list,dpyID);
 
     if(list->hwLayers[context->mRgaTBI.index].compositionType == HWC_FRAMEBUFFER) {
@@ -11266,7 +11272,7 @@ static int hwc_prepare_screen(hwc_composer_device_1 *dev, hwc_display_contents_1
         }
     }
 
-    /* 若 "没有" hwc_overlay_policy 能胜任输出, 则... */
+    /* �?"没有" hwc_overlay_policy 能胜任输�? �?.. */
     if(ret !=0 ){
 		ALOGD_IF(log(HLLFOU),"Policy out [%d][%s]",__LINE__,__FUNCTION__);
         goto GpuComP;
@@ -11292,15 +11298,15 @@ static int hwc_prepare_screen(hwc_composer_device_1 *dev, hwc_display_contents_1
 
     //before composition:do overlay no error???
     struct hwc_fb_info hfi;
-    /* <从 hwc_context 和 hwc_display_contents, 获取 arg_for_rk_fb_ioctl_config_done 等信息.> */
-    if(context->zone_manager.composter_mode == HWC_LCDC){ // 这里包含了所有对应 hwc_overlay 的 composition_mode.
+    /* <�?hwc_context �?hwc_display_contents, 获取 arg_for_rk_fb_ioctl_config_done 等信�?> */
+    if(context->zone_manager.composter_mode == HWC_LCDC){ // 这里包含了所有对�?hwc_overlay �?composition_mode.
         err = hwc_collect_cfg(context,list,&hfi,0,true);
     }else if(context->zone_manager.composter_mode == HWC_MIX){
         err = hwc_collect_cfg(context,list,&hfi,1,true);
     }else if(context->zone_manager.composter_mode == HWC_MIX_V2){
         err = hwc_collect_cfg(context,list,&hfi,2,true);
     }
-    /* 若获取 "失败", 则... */
+    /* 若获�?"失败", �?.. */
     if(err){
         ALOGD_IF(log(HLLFOU),"Policy out [%d][%s]",__LINE__,__FUNCTION__);
         /* 退回到 gles_composition. */
@@ -11690,7 +11696,8 @@ static int hwc_Post( hwcContext * context,hwc_display_contents_1_t* list)
             }
 #endif
         }
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
         if(context==_contextAnchor && context->mResolutionChanged && context->mLcdcNum==2){
             hotplug_reset_dstposition(&fb_info,2);
         }
@@ -11776,7 +11783,7 @@ static int hwc_Post( hwcContext * context,hwc_display_contents_1_t* list)
             D("to hack 'fb_info'.");
             hack_wins_cfg_for_config_done(context, list, &fb_info);
 
-            disable_hacking_wins_cfg(); // 若 hack_wins_cfg_for_config_done 只需要被执行一次.
+            disable_hacking_wins_cfg(); // �?hack_wins_cfg_for_config_done 只需要被执行一�?
         }
 #endif
 
@@ -11851,10 +11858,10 @@ UseFence:
 }
 
 /**
- * 以 overlay 的方式将 'list' 送显示.
+ * �?overlay 的方式将 'list' 送显�?
  *
  * @param mix_flag :
- *      表征当前 hwc_context 的 composition_mode :
+ *      表征当前 hwc_context �?composition_mode :
  *          0, HWC_LCDC
  *          1, HWC_MIX
  *          2, HWC_MIX_V2
@@ -11910,7 +11917,7 @@ static int hwc_set_lcdc(hwcContext * context, hwc_display_contents_1_t *list,int
         }
 #endif
 
-        /* 若当前在 context_of_external_display 中, 则... */
+        /* 若当前在 context_of_external_display �? �?.. */
         if(context == _contextAnchor1) {
             if(_contextAnchor->mHdmiSI.NeedReDst) {
                 if(hotplug_reset_dstposition(&(hfi.fb_info),0)) {
@@ -11933,7 +11940,8 @@ static int hwc_set_lcdc(hwcContext * context, hwc_display_contents_1_t *list,int
 #endif
         }
 
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
         if(context==_contextAnchor && context->mResolutionChanged && context->mLcdcNum==2) {
             hotplug_reset_dstposition(&(hfi.fb_info),2);
         }
@@ -12017,7 +12025,7 @@ UseFence:
         for(unsigned int i=0;i<RK_MAX_BUF_NUM;i++) {
             result.appendFormat("fd" "[%d]=%d ", i, hfi.fb_info.rel_fence_fd[i]);
             if(hfi.fb_info.rel_fence_fd[i] >= 0) {
-                /** 若对应 当前 area 的 hwc_layer 要求对应的 release_fence_fd, 则... */
+                /** 若对�?当前 area �?hwc_layer 要求对应�?release_fence_fd, �?.. */
                 if(hfi.pRelFenceFd[i]) {
                     if(*(hfi.pRelFenceFd[i]) == 0) {
                         *(hfi.pRelFenceFd[i]) = -1;
@@ -12495,7 +12503,7 @@ int hwc_check_fencefd(size_t numDisplays,hwc_display_contents_1_t  ** displays)
 }
 
 /**
- * 对 primary_display_device 和 external_display_device 的 hwc_composer_device_1::set 方法的具体实现.
+ * �?primary_display_device �?external_display_device �?hwc_composer_device_1::set 方法的具体实�?
  */
 static int hwc_set_screen(hwc_composer_device_1 *dev, hwc_display_contents_1_t *list,int dpyID) 
 {
@@ -13020,7 +13028,8 @@ void hwc_change_screen_config(int dpy, int fb, int state) {
 }
 
 void hwc_change_config(){
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
     hwcContext * context = _contextAnchor;
     if(context->mLcdcNum == 2){
         char buf[100];
@@ -13815,7 +13824,8 @@ hwc_device_open(
 #endif
     init_thread_pamaters(&context->mControlStereo);
 
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1 
     {
         int fd = -1;
         int ret = -1;
@@ -14092,7 +14102,8 @@ hwc_device_open(
         LOGD("Create hotplug_try_register thread error .");
     }
 #endif
-#ifdef RK3288_BOX
+//#ifdef RK3288_BOX
+#if 1
     if(context->mLcdcNum == 2){
         hwc_change_config();
     }
@@ -14359,10 +14370,7 @@ int hotplug_get_config(int flag){
     int outY = 0;
     hotplug_parse_mode(&outX, &outY);
 #if defined(TARGET_BOARD_PLATFORM_RK3399) || defined(TARGET_BOARD_PLATFORM_RK3366) || defined(TARGET_BOARD_PLATFORM_RK3288)
-    if (hwc_get_int_property("ro.htg.force", "0"))
-	    hwc_parse_screen_info(&outX, &outY);
-	else
-	    hotplug_parse_mode(&outX, &outY);
+	hwc_parse_screen_info(&outX, &outY);
 #endif
     info.xres = outX;
     info.yres = outY;
@@ -14435,13 +14443,14 @@ int hotplug_get_config(int flag){
         _contextAnchor->fd_3d = context->fd_3d;
     }
 
-#if RK_BOX
+//#if RK_BOX
+#if 1
     if (flag == 1) {
         char buf[100];
         int width = 0;
         int height = 0;
         int fdExternal = -1;
-        #ifdef RK3288_BOX
+        #ifdef RK3288_MID//RK3288_BOX
         if(_contextAnchor->mLcdcNum == 2){
             fdExternal = open("/sys/class/graphics/fb4/screen_info", O_RDONLY);
         }else{
@@ -14709,7 +14718,11 @@ int hwc_parse_screen_info(int *outX, int *outY)
     int width = 0;
     int height = 0;
     int fdExternal = -1;
-	fdExternal = open("/sys/class/graphics/fb5/screen_info", O_RDONLY);
+	#if defined(TARGET_BOARD_PLATFORM_RK3288)
+		fdExternal = open("/sys/class/graphics/fb4/screen_info", O_RDONLY);
+	#elif defined(TARGET_BOARD_PLATFORM_RK3399) || defined(TARGET_BOARD_PLATFORM_RK3366)
+		fdExternal = open("/sys/class/graphics/fb5/screen_info", O_RDONLY);
+	#endif
     if(fdExternal < 0){
         ALOGE("hotplug_get_config:open fb screen_info error,cvbsfd=%d",fdExternal);
         return -errno;
@@ -14720,7 +14733,7 @@ int hwc_parse_screen_info(int *outX, int *outY)
     }
     close(fdExternal);
 	sscanf(buf,"xres:%d yres:%d",&width,&height);
-    ALOGD("hotplug_get_config:width=%d,height=%d",width,height);
+    ALOGD("hwc_parse_screen_info:width=%d,height=%d",width,height);
 	*outX = width;
 	*outY = height;
 	return 0;
@@ -14900,8 +14913,7 @@ void *hotplug_try_register(void *arg)
     {
         if(getHdmiMode() == 1){
             hotplug_free_back_resource();
-			if (!hwc_get_int_property("ro.htg.force", "0"))
-                hotplug_get_config(0);
+            hotplug_get_config(0);
         }
     }
 #endif
@@ -14916,10 +14928,6 @@ void *hotplug_try_register(void *arg)
     if(getHdmiMode() == 1){
         handle_hotplug_event(1, 6);
 		ALOGI("hotplug_try_register at line = %d",__LINE__);
-	} else if (hwc_get_int_property("ro.htg.force", "0")) {
-        hotplug_free_back_resource();
-		ALOGD(" ro.htg.force hotplug_try_register at line = %d",__LINE__);
-        handle_hotplug_event(1, 6);
     }else{
 #if (defined(RK3368_BOX) || defined(RK3288_BOX) || defined(RK3399_BOX))
 #if RK3288_BOX
@@ -14931,6 +14939,13 @@ void *hotplug_try_register(void *arg)
         handle_hotplug_event(1, 1);
         ALOGI("hotplug_try_register at line = %d",__LINE__);
 #endif
+#elif defined(RK3288_MID)
+		if(context->mLcdcNum == 2){
+			hotplug_free_back_resource();
+			handle_hotplug_event(1, 6);
+			ALOGI("hotplug_try_register at line = %d",__LINE__);
+			goto READY;
+		}
 #endif
     }
 #if (defined(GPU_G6110) || defined(RK3288_BOX) || defined(RK3399_BOX))
