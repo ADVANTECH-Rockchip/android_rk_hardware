@@ -105,7 +105,7 @@ ifeq ($(VERSION_JB),true)
 LOCAL_CFLAGS += -DANDROID_JELLYBEAN
 endif
 
-ifneq (,$(filter $(TARGET_BUILD_VARIANT),eng userdebug))
+ifneq (,$(filter $(TARGET_BUILD_VARIANT),eng userdebug user))
 ifneq ($(COMPILE_INVENSENSE_COMPASS_CAL),0)
 LOCAL_CFLAGS += -DINVENSENSE_COMPASS_CAL
 endif
@@ -130,7 +130,7 @@ LOCAL_SRC_FILES += MPLSensor.cpp
 LOCAL_SRC_FILES += MPLSupport.cpp
 LOCAL_SRC_FILES += InputEventReader.cpp
 
-ifneq (,$(filter $(TARGET_BUILD_VARIANT),eng userdebug))
+ifneq (,$(filter $(TARGET_BUILD_VARIANT),eng userdebug user))
 ifeq ($(COMPILE_INVENSENSE_COMPASS_CAL),0)
 LOCAL_SRC_FILES += AkmSensor.cpp
 LOCAL_SRC_FILES += CompassSensor.AKM.cpp
@@ -208,7 +208,7 @@ ifeq ($(VERSION_JB),true)
 LOCAL_CFLAGS += -DANDROID_JELLYBEAN
 endif
 
-ifneq (,$(filter $(TARGET_BUILD_VARIANT),eng userdebug))
+ifneq (,$(filter $(TARGET_BUILD_VARIANT),eng userdebug user))
 ifneq ($(COMPILE_INVENSENSE_COMPASS_CAL),0)
 LOCAL_CFLAGS += -DINVENSENSE_COMPASS_CAL
 endif
