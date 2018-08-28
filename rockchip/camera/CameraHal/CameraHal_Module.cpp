@@ -1098,7 +1098,7 @@ int camera_get_number_of_cameras(void)
     memcpy(&gCamInfos[1], &camInfoTmp[1], sizeof(rk_cam_info_t));
 
 
-    property_get("ro.sf.hwrotation", property, "0");
+    property_get("persist.sys.hwrotation", property, "0");
     hwrotation = strtol(property,0,0);
 
 #if 0
@@ -1254,7 +1254,7 @@ loop_continue:
     memcpy(&gCamInfos[1], &camInfoTmp[1], sizeof(rk_cam_info_t));
 
 
-    property_get("ro.sf.hwrotation", property, "0");
+    property_get("persist.sys.hwrotation", property, "0");
     hwrotation = strtol(property,0,0);
 
     if (hwrotation == 0) {
