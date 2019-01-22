@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2018 Fuzhou Rockchip Electronics Co., Ltd. All rights reserved.
+ * Copyright (C) 2008 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #define LOG_TAG "GRALLOC-ROCKCHIP"
 
 // #define ENABLE_DEBUG_LOG
@@ -1469,6 +1486,15 @@ static void drm_gem_rockchip_destroy(struct gralloc_drm_drv_t *drv)
 	free(info);
 }
 
+static bool should_disable_afbc_in_fb_target_layer()
+{
+    char value[PROPERTY_VALUE_MAX];
+
+    property_get("sys.gralloc.disable_afbc", value, "0");
+
+    return (0 == strcmp("1", value) );
+}
+
 struct gralloc_drm_bo_t *drm_gem_rockchip_alloc(
 		struct gralloc_drm_drv_t *drv,
 		struct gralloc_drm_handle_t *handle)
@@ -1524,24 +1550,41 @@ struct gralloc_drm_bo_t *drm_gem_rockchip_alloc(
 	if (height < 2160)
 	{
 #define MAGIC_USAGE_FOR_AFBC_LAYER     (0x88)
+        /* if current buffer is NOT for fb_target_layer, ... */
 	    if (!(usage & GRALLOC_USAGE_HW_FB)) {
 	            if (!(usage & GRALLOC_USAGE_EXTERNAL_DISP) &&
 	                MAGIC_USAGE_FOR_AFBC_LAYER == (usage & MAGIC_USAGE_FOR_AFBC_LAYER) ) {
 	                internal_format = MALI_GRALLOC_FORMAT_INTERNAL_RGBA_8888 | MALI_GRALLOC_INTFMT_AFBC_BASIC;
 	                D("use_afbc_layer: force to set 'internal_format' to 0x%llx for usage '0x%x'.", internal_format, usage);
 	            }
-	    } else {
+	    }
+        /* IS for fb_target_layer, ... */
+        else
+        {
 	        if ( !(usage & GRALLOC_USAGE_EXTERNAL_DISP)
                 && MAGIC_USAGE_FOR_AFBC_LAYER != (usage & MAGIC_USAGE_FOR_AFBC_LAYER) )
             {
-                internal_format = MALI_GRALLOC_FORMAT_INTERNAL_RGBA_8888 | MALI_GRALLOC_INTFMT_AFBC_BASIC;
-
-                if ( handle->prime_fd < 0 ) // 只在将实际分配 buffer 的时候打印.
+                /* if should NOT disable AFBC in fb_target_layer, ... */
+                if ( !should_disable_afbc_in_fb_target_layer() )
                 {
-                    I("use_afbc_layer: force to set 'internal_format' to 0x%" PRIu64 " for buffer_for_fb_target_layer.",
-                      internal_format);
+                    internal_format = MALI_GRALLOC_FORMAT_INTERNAL_RGBA_8888 | MALI_GRALLOC_INTFMT_AFBC_BASIC;
+
+                    if ( handle->prime_fd < 0 ) // 只在将实际分配 buffer 的时候打印.
+                    {
+                        I("use_afbc_layer: force to set 'internal_format' to 0x%" PRIx64 " for buffer_for_fb_target_layer.",
+                          internal_format);
+                    }
+                    property_set("sys.gmali.fbdc_target","1");
                 }
-                property_set("sys.gmali.fbdc_target","1");
+                /* if SHOULD disable AFBC in fb_target_layer, ... */
+                else
+                {
+                    if ( handle->prime_fd < 0 )
+                    {
+                        I("debug_only : not to use afbc in fb_target_layer, the original format : 0x%" PRIx64, internal_format);
+                    }
+			        property_set("sys.gmali.fbdc_target","0");
+                }
 	        }
 	        else
 	        {
@@ -1779,7 +1822,7 @@ struct gralloc_drm_bo_t *drm_gem_rockchip_alloc(
                 AERR("err.");
                 return NULL;
             }
-            AINF("for nv12, w : %d, h : %d, pixel_stride : %d, byte_stride : %d, size : %zu; internalHeight : %d.",
+            ADBG("for nv12, w : %d, h : %d, pixel_stride : %d, byte_stride : %d, size : %zu; internalHeight : %d.",
                     w,
                     h,
                     pixel_stride,
@@ -1795,7 +1838,7 @@ struct gralloc_drm_bo_t *drm_gem_rockchip_alloc(
                 return NULL;
             }
 
-            AINF("for nv12_10, w : %d, h : %d, pixel_stride : %d, byte_stride : %d, size : %zu; internalHeight : %d.",
+            ADBG("for nv12_10, w : %d, h : %d, pixel_stride : %d, byte_stride : %d, size : %zu; internalHeight : %d.",
                     w,
                     h,
                     pixel_stride,
@@ -1805,7 +1848,7 @@ struct gralloc_drm_bo_t *drm_gem_rockchip_alloc(
             break;
 
         default:
-            E("unexpected 'base_format' : 0x%" PRIu64, base_format);
+            E("unexpected 'base_format' : 0x%" PRIx64, base_format);
             return NULL;
     }
 
@@ -1894,7 +1937,7 @@ struct gralloc_drm_bo_t *drm_gem_rockchip_alloc(
 		}
 
 #if RK_DRM_GRALLOC
-		AINF("Got handle %d for fd %d\n", gem_handle, handle->prime_fd);
+		ADBG("Got handle %d for fd %d", gem_handle, handle->prime_fd);
 #else
                 ALOGV("Got handle %d for fd %d\n", gem_handle, handle->prime_fd);
 #endif
@@ -1933,7 +1976,7 @@ struct gralloc_drm_bo_t *drm_gem_rockchip_alloc(
 		ret = drmPrimeHandleToFD(info->fd, gem_handle, 0,
 			&handle->prime_fd);
 #if RK_DRM_GRALLOC
-                AINF("Got fd %d for handle %d\n", handle->prime_fd, gem_handle);
+                ADBG("Got fd %d for handle %d", handle->prime_fd, gem_handle);
 #else
 		ALOGV("Got fd %d for handle %d\n", handle->prime_fd, gem_handle);
 #endif
@@ -1971,7 +2014,7 @@ struct gralloc_drm_bo_t *drm_gem_rockchip_alloc(
         {
             if ( addr != NULL )
             {
-                D("to init afbc_buffer, addr : %p", addr);
+                ADBG("to init afbc_buffer, addr : %p", addr);
                 init_afbc((uint8_t*)addr, internal_format, w, h);
             }
             else
@@ -2108,10 +2151,10 @@ struct gralloc_drm_bo_t *drm_gem_rockchip_alloc(
         handle->name = 0;
 	buf->base.handle = handle;
 
-        AINF("leave, w : %d, h : %d, format : 0x%x,internal_format : 0x%" PRIu64 ", usage : 0x%x. size=%d,pixel_stride=%d,byte_stride=%d",
+        ADBG("leave, w : %d, h : %d, format : 0x%x,internal_format : 0x%" PRIx64 ", usage : 0x%x. size=%d,pixel_stride=%d,byte_stride=%d",
                 handle->width, handle->height, handle->format,internal_format, handle->usage, handle->size,
                 pixel_stride,byte_stride);
-        AINF("leave: prime_fd=%d,share_attr_fd=%d",handle->prime_fd,handle->share_attr_fd);
+        ADBG("leave: prime_fd=%d,share_attr_fd=%d",handle->prime_fd,handle->share_attr_fd);
 	return &buf->base;
 
 err_unref:
