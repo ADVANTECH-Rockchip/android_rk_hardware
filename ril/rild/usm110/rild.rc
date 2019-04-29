@@ -1,4 +1,4 @@
-service ril-daemon /vendor/bin/hw/rild
+service ril-daemon /vendor/bin/hw/rild -l /vendor/lib/libquectel-ril.so -- -d /dev/ttyUSB2 -B 115200bps  -C 0
     class main
     user root
     group radio vpn cache inet misc audio log readproc wakelock

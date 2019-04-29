@@ -27,7 +27,12 @@ endif
 LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_PROPRIETARY_MODULE := true
 LOCAL_MODULE:= rild
-LOCAL_INIT_RC := rild.rc
+ifeq ($(strip $(TARGET_PRODUCT)), usm110)
+    LOCAL_INIT_RC := usm110/rild.rc
+endif
+ifeq ($(strip $(TARGET_PRODUCT)), rsb4680)
+    LOCAL_INIT_RC := rsb4680/rild.rc
+endif
 
 include $(BUILD_EXECUTABLE)
 
