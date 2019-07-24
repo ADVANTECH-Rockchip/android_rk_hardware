@@ -15,7 +15,7 @@ using namespace android;
 #if defined(TARGET_RK3399)
     #define CAMERAS_SUPPORTED_SIMUL_MAX     2
 #else
-    #define CAMERAS_SUPPORTED_SIMUL_MAX     1
+    #define CAMERAS_SUPPORTED_SIMUL_MAX     2
 #endif
 #define CAMERA_DEVICE_NAME              "/dev/video"
 #define CAMERA_MODULE_NAME              "RK29_ICS_CameraHal_Module"

@@ -875,6 +875,12 @@ int camera_get_number_of_cameras(void)
                 } else {
                     camInfoTmp[cam_cnt&0x01].facing_info.facing = CAMERA_FACING_BACK;
                 }  
+
+                if ((cam_cnt&0x01) == 0)
+                    camInfoTmp[cam_cnt&0x01].facing_info.facing = CAMERA_FACING_BACK;
+                else
+                    camInfoTmp[cam_cnt&0x01].facing_info.facing = CAMERA_FACING_FRONT;
+
                 ptr = strstr((char*)&capability.card[0],"-");
                 if (ptr != NULL) {
                     ptr++;
