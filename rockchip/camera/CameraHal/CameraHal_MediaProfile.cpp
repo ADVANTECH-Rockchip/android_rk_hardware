@@ -250,6 +250,20 @@ int xml_version_check(struct v4l2_capability* CamDriverCapability)
 	return (CamDriverCapability->version > 0x000300)?1:0;
 }
 
+void media_profiles_xml_remove(void)
+{
+    FILE* fp=NULL;
+    char pXmlFile[50];
+
+    strlcpy(pXmlFile, RK_DST_MEDIA_PROFILES_XML_PATH, sizeof(pXmlFile));
+    fp = fopen(pXmlFile, "r");
+    if(fp!=NULL){
+        fclose(fp);
+	LOGD("%s is exist, remove!!!!!!\n", pXmlFile);
+	remove(pXmlFile);
+    }
+}
+
 int xml_read_camname(FILE* fp, struct xml_video_name* video_name, int video_count)
 {
 	char one_line_buf[256];

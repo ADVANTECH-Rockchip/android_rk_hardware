@@ -18,15 +18,11 @@ const struct config_control rt5660_speaker_normal_controls[] = {
         .int_val = {on},
     },
     {
-        .ctl_name = "HPO MIX DAC2 Switch",
+        .ctl_name = "Speaker Playback Switch",
         .int_val = {on},
     },
     {
-        .ctl_name = "HP L Playback Switch",
-        .int_val = {on},
-    },
-    {
-        .ctl_name = "HP R Playback Switch",
+        .ctl_name = "OUT Playback Switch",
         .int_val = {on},
     },
     #endif
@@ -74,17 +70,9 @@ const struct config_control rt5660_main_mic_capture_controls[] = {
         .ctl_name = "RECMIXR BST1 Switch",
         .int_val = {on},
     },
-        {
-        .ctl_name = "Mono ADC R1 Mux",
-        .str_val = "ADCR",
-    },
-    {
-        .ctl_name = "Mono ADC MIXR ADC1 Switch",
-        .int_val = {on},
-    },
     {
         .ctl_name = "IN1 Mode Control",
-        .str_val = "Differential",
+        .str_val = "Single ended",
     },
     //min=0,max=8, bypass=0=0db, 30db=3, 52db=8
     {
@@ -96,18 +84,21 @@ const struct config_control rt5660_main_mic_capture_controls[] = {
         .ctl_name = "ADC Capture Volume",
         .int_val = {120, 120},
     },
+    {
+        .ctl_name = "STO1 ADC Boost Gain",
+        .int_val = {2, 2},
+    },
 };
 
 const struct config_control rt5660_playback_off_controls[] = {
     {
-        .ctl_name = "HP L Playback Switch",
+        .ctl_name = "Speaker Playback Switch",
         .int_val = {off},
     },
     {
-        .ctl_name = "HP R Playback Switch",
+        .ctl_name = "OUT Playback Switch",
         .int_val = {off},
     },
-    
 };
 
 const struct config_control rt5660_capture_off_controls[] = {

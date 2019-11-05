@@ -644,6 +644,7 @@ int camera_get_number_of_cameras(void)
     if (gCamerasNumber > 0)
         goto camera_get_number_of_cameras_end;
 
+    media_profiles_xml_remove();
     {
 		property_set(CAMERAHAL_CAM_OTP_PROPERTY_KEY, "true");
         memset(version,0x00,sizeof(version));
@@ -749,7 +750,16 @@ int camera_get_number_of_cameras(void)
             fd = open(cam_path, O_RDONLY);
             if (fd < 0) {
                 LOGE("Open %s failed! strr: %s",cam_path,strerror(errno));
-                break;
+		memset(property,0x00,sizeof(property));
+		property_get("sys_graphic.cam_hal.first", property, "true");
+		LOGE("sys_graphic.cam_hal.first prop: %s",property);
+		if(!strcmp(property,"true")) {
+			property_set("sys_graphic.cam_hal.first", "false");
+			goto camera_get_number_of_cameras_end;
+		} else {
+			property_set("sys_graphic.cam_hal.first", "");
+			break;
+		}
             } 
             LOGD("Open %s success!",cam_path);
 
@@ -773,6 +783,12 @@ int camera_get_number_of_cameras(void)
                 } else {
                     camInfoTmp[cam_cnt&0x01].facing_info.facing = CAMERA_FACING_BACK;
                 }  
+
+                if ((cam_cnt&0x01) == 0)
+                    camInfoTmp[cam_cnt&0x01].facing_info.facing = CAMERA_FACING_BACK;
+                else
+                    camInfoTmp[cam_cnt&0x01].facing_info.facing = CAMERA_FACING_FRONT;
+
                 ptr = strstr((char*)&capability.card[0],"-");
                 if (ptr != NULL) {
                     ptr++;
