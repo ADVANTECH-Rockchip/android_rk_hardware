@@ -43,7 +43,7 @@ LOCAL_SHARED_LIBRARIES := \
         libcutils \
         liblog
 
-LOCAL_MODULE := libbt-vendor
+LOCAL_MODULE := libbt-vendor-bcm
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_OWNER := broadcom
